@@ -1,0 +1,45 @@
+//Star Arrangements
+//conditions: at least two rows, all odd rows are equal, all even rows are equal, difference b/w two rows does not exceed 1
+// first row must have less stars than second row
+// exclude cases in which i = 1 or i = s
+
+#include <iostream>
+#include <fstream>
+#define IS_VALID(s) (3 <= s  && s <= 1000000)
+
+using namespace std;
+
+int main() 
+{
+  //brute force
+  int s;
+  ifstream infile;
+
+  string file;
+  cin >> file;    //reads in filename of list of integers delim by \n
+  infile.open(file);
+  while (infile >> s)
+  {
+    if (IS_VALID(s)) // 3 <= s <= 1000000
+    {
+      cout << s << ":" << endl;
+      int tmp;
+      for (int i = 2; i <= (s/2 + 1); i ++) 
+        for (int j = i - 1; j <= i; j ++)
+        {
+          tmp = s;
+          while (tmp > 0)
+          {
+            tmp -= i;
+            if (tmp == 0)
+              cout << " " << i << "," << j << endl;
+            tmp -= j;
+            if (tmp == 0)
+              cout << " " << i << "," << j << endl;
+          }
+        }
+    }
+  }
+  infile.close();
+  return (0);
+}
