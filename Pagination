@@ -1,0 +1,58 @@
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+int main()
+{
+  int r; //rows
+  int c; //columns
+  cin >>  r >> c;
+  int pg = 1;
+  vector<vector<int>> atlas(c);
+
+  string line;
+
+  for (int i = 0; i < c; i ++)
+  {
+    cin >> line;
+    for (int j = 0; j < r; j ++)
+    {
+      if (line[j] == '.')
+      {
+        atlas[i][j] = pg;
+        pg++;
+      }
+      else
+        atlas[i][j] = 0;
+
+      cout << pg << " ";
+
+
+      if (i - 1 >= 0)
+        cout << atlas[i -1][j];
+      else 
+          cout << 0;
+
+      cout << " ";
+      if (j + 1 <= r)
+        cout << atlas[i][j + 1];
+      else 
+          cout << 0;
+      cout << " ";      
+      if (i + 1 <= c)
+        cout << atlas[i + 1][j];
+      else
+        cout << 0;
+      cout << " ";
+      if (j - 1 >= 0)
+        cout << atlas[i][j - 1];
+      else
+        cout << 0;
+      cout << endl;
+      
+    }
+  }
+
+  return 0;
+}
