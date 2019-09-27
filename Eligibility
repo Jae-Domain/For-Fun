@@ -1,0 +1,62 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <cstdlib>
+
+using namespace std;
+
+int main() {
+
+  ifstream infile;
+
+  infile.open("file");
+
+  int n; //# of contestants
+
+  infile >> n;
+
+  string name;
+  string studies;
+  string birth;
+  int credits;
+  int tmp;
+
+  for (int j = 0; j < n; j++)
+  {
+    infile >> name;
+    infile >> studies;
+    infile >> birth;
+    infile >> credits;
+
+    cout << name;
+
+    studies = studies.substr (0, 4);
+    tmp = atoi(studies.c_str());
+
+    //student began college 2010 or later
+    if (tmp > 2010)
+    {
+      cout << " eligible" << endl;
+      continue;
+    }
+
+    birth = birth.substr (0, 4);
+    tmp = atoi(birth.c_str());
+    if (tmp > 1991)
+    {
+      cout << " eligible" << endl;
+      continue;
+    }
+    
+      //if false && more than 8 semesters, ineligible
+    if (credits >= 41)
+    {
+      cout << " ineligible" << endl;
+      continue;
+    }
+
+    //n/a provide coach
+    cout << " coach petitions" << endl;
+  }
+  return 0;
+}
