@@ -1,0 +1,50 @@
+//uses stack to see if parentheses are being inputted in correct order, viable for brainFuck
+class Solution {
+public:
+    char reverse (char x)
+    {
+        if (x == '(')
+            return ')';
+        if (x == '{')
+            return '}';
+        if (x == '[')
+            return ']';
+        return 0;
+    }
+    
+    bool isValid(string s) {
+  
+        vector <char> stack;
+        
+        if (s == "")
+            return true;
+        if (!(reverse(s[0])))
+            return false;
+        
+        char p;   
+        
+        for (int i = 0; i < s.length(); i++)
+        {
+            if (s[i] == '(' || s[i] == '[' || s[i] == '{')
+            {
+                stack.push_back(s[i]);
+                p = reverse(s[i]);
+                continue;
+            }   
+            
+            if (s[i] == p)
+            {
+                stack.pop_back();
+                if (!stack.empty())
+                    p = reverse(stack.back());
+                continue;
+            }
+            
+            return false;
+            
+        }
+        if (stack.empty())    
+            return true;
+        return false;
+    }
+};
