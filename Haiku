@@ -1,0 +1,134 @@
+//competition practice
+
+//input: a sentence of English text
+//attempts to output a haiku (5, 7, 5)
+#include <iostream>
+#include <string>
+#include <vector>
+
+//macros
+#define IS_LETTER(x) ((x >= 'a' && x <= 'z') || (x >= 'A' && x <= 'Z'))
+#define IS_VOWEL(x) (x == 'a' || x == 'e' || x == 'i' || x == 'o' || x == 'u')
+#define TO_LOWER(x) (if (IS_LETTER(x) && x >= 'A') { return x - 'A';}))
+
+using namespace std;
+
+
+void printHaiku(string &s, vector<int>);
+int parseWord(string s, int &i);
+int countSyllables(string s, vector <int> &);
+char toLower(char x);
+
+//returns error if too few/many syllables, or if words cannot be split among lines correctly
+int main() 
+{
+  
+  string sent;
+  int syll = 18;
+  vector <int> stanza; //holds endline placement
+  
+  while (syll != 17 || stanza.empty()) //prompts for user entry, error checks
+  {
+    cout << "Speak from the heart: ";
+    getline(cin, sent);
+    syll = countSyllables(sent, stanza);
+    cout << "Your heart has " << syll << " syllables." << endl;
+    if (syll < 17){
+        cout << "Your heart has too few syllables, try again." << endl;
+    }
+    if (syll > 17){
+        cout << "Your heart is too talkative, try again." << endl;
+    }
+    if (stanza.empty()){
+        cout << "Your heart doesn't divide syllables correctly, try again." << endl;
+    }
+  }
+
+    cout << endl;
+    //if sentence can be turned into haiku, printsI
+  printHaiku(sent, stanza);
+    return 0;
+}
+
+void printHaiku(string &s, vector <int> stanza)
+{
+    int j = 0;
+    for(int i = 0; i < s.length(); ++i)
+    {
+        cout << s[i];
+        if (i == stanza[j]){
+            cout << endl;
+            ++j;
+            while (!IS_LETTER(s[i])){ //removes white space before new line
+                ++i;
+            }
+            if (IS_LETTER(s[i])){
+                --i;
+            }
+            
+        }
+    }
+    cout << endl;
+}
+int parseWord(string s, int &i) //takes in string at index and parses next available 'word' delmited by nonletters
+{
+    int syll = 0;
+    while (IS_LETTER(s[i]))
+    {
+        if (IS_VOWEL(toLower(s[i]))) //if we encounter a vowel
+        {
+            ++syll; //increments syllable
+            while (IS_VOWEL(toLower(s[i]))) //and ignores subsequent vowels
+            {
+                ++i;
+            }
+        }
+        if (IS_LETTER(s[i])){ //if is a consonant, increment until next vowel
+            ++i;
+        }
+    }
+
+    //end of word, check last letter
+    if (toLower(s[i - 1]) == 'e' && syll > 1) //accounts for silent e's
+    {
+        --syll;
+    }
+    else if (toLower(s[i - 1]) == 's' && toLower(s[i - 2]) == 'e' && syll > 1) //accounts for plural nouns
+    {
+        --syll;
+    }
+    else if (toLower(s[i - 1]) == 'y'){ //accounts for ending y's
+        ++syll;
+    }
+
+    return syll; //syllable count for word
+}
+
+int countSyllables(string s, vector <int> &stan)
+{
+    //look for subsequent vowels
+    //syllables defined by divisions of vowels
+    int syll = 0;
+    for (int i = 0; i < s.length(); ++i)
+    {
+        while (!IS_LETTER(s[i])) //rid white space
+        {
+            ++i;
+        }
+       syll += parseWord(s, i);
+       if (syll == 5 || syll == 12){ //if we reach the end of a line
+           stan.push_back(i); //push back string index
+       }
+    }
+    //printHaiku(s, stan);
+
+    return syll;
+}
+
+char toLower(char x)
+{
+    if (x >= 'A' && x <= 'Z'){
+        return (x + ('a' - 'A'));
+    }
+    return x;
+}
