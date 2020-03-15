@@ -93,7 +93,7 @@ int parseWord(string s, int &i) //takes in string at index and parses next avail
     {
         --syll;
     }
-    else if (toLower(s[i - 1]) == 's' && toLower(s[i - 2]) == 'e' && syll > 1) //accounts for plural nouns
+    else if ((toLower(s[i - 1]) == 's' || toLower(s[i - 1]) == 'd') && toLower(s[i - 2]) == 'e' && syll > 1) //accounts for plural nouns/ past tense verbs
     {
         --syll;
     }
