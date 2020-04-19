@@ -1,0 +1,56 @@
+#include <iostream>
+#include <string>
+
+//I just found out what esoteric Programming languages are today
+//Reads in strings
+// Eaa. Yeo. Eaa.. Aaa. Yuuuuuuooo. Yuu. Yieo. Eoo. Uo. Uooo. Uuuuuuoo. prints "Hello World!"
+using namespace std;
+
+
+int main() {
+  string input;
+  char output = 'A';
+  int vowel = 0;
+
+  while (cin >> input)
+  {
+      for (unsigned int i = 0; i < input.length(); ++i)
+      {
+          
+          switch(input[i]) {
+              case 'a': case 'A':
+                output += 1;
+                break;
+              case 'e': case 'E':
+                output += 5;
+                break;
+              case 'i': case 'I':
+                output += 10;
+                break;
+              case 'o': case 'O':
+                output -= 1;
+                break;
+              case 'u': case 'U':
+                output -= 5;
+                break;
+
+              case 'y': case 'Y': //switch cases
+                if (output > 'Z')
+                    output = 'A';
+                else
+                    output = 'a';
+                break;
+              case ',': //output endline
+                cout << endl;
+                break;
+              case '.': //output current pointer
+                cout << output; 
+                break;
+              default:
+                break;
+
+          }
+
+      }
+  }
+}
